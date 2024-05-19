@@ -15,8 +15,8 @@ def read_content():
     return tasks
 
 def write_content(tasks):
-    file = open(filepath, "w")
-    json.dump(tasks, file)
+    file = open(filepath, "w", encoding = 'utf8')
+    json.dump(tasks, file, ensure_ascii=False)
 
 
 # Print tasks
@@ -26,7 +26,7 @@ def print_tasks(tasks):
         print(f'{i+1}. {item}')    
     print("\n")
 
-    
+
 # Add task to the list
 
 def add_task_to_list(tasks):
@@ -36,17 +36,33 @@ def add_task_to_list(tasks):
 # Delete task from the list
 
 def delete_task():
-    del_task = input("Enter a task to remove: ")
-    tasks.remove(del_task)
+    try:
+        index = int(input("Enter the number of the task to remove: ")) -1
+        if index < len(tasks):
+            del tasks[index]
+            print("Task is successfully deleted.")
+        else:
+            print("This task does not exist.")
+    except:
+        print("Please enter the number of the task: ")
+    
 
 # Modify task
 
 def modify_task():
-    target_index = int(input("Enter the number to replace: "))
-    new_value = input("Enter the new value: ")
-    tasks[target_index] = new_value
-    print(f"Task replaced to {new_value}")
- 
+    try:
+        target_index = int(input("Enter the number to replace: ")) - 1
+        if target_index < len(tasks):
+            new_value = input("Enter the new task: ")
+            tasks[target_index] = new_value
+            print(f"Task replaced to {new_value}")
+        else:
+            print("This task does not exist.")
+    except:
+        print("Enter the number to replace: ")
+
+
+        
 
 # Quit
 
