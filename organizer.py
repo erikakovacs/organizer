@@ -1,5 +1,6 @@
 from organizer_variables import * 
 import json
+from datetime import datetime
 
 
 # Say hello
@@ -28,15 +29,37 @@ def print_tasks(tasks):
     print("\n")
 
 
+# Add two inputs to a dictionary
+
+def add_to_dictionary(new_task, date):
+    new_dict = {}
+    new_task = input("Enter your new task: ")
+    date = input("Enter the date in dd/mm format: ")
+    new_dict[date] = new_task
+
+
 # Add task to the list
 
-def get_input_to_add(tasks):
-    new_task = input("Enter your new task: ")
-    add_task_to_list(tasks, new_task)
+def get_input_to_add(tasks, new_dict):
+    try:
+        add_task_to_list(tasks, new_dict)
+    except:
+        raise Exception()
+           
 
-def add_task_to_list(tasks, new_task):
-    tasks.append(new_task)
-
+def add_task_to_list(tasks, date, task):
+    
+    new_dict = {
+        'task' : task,
+        'date' : date
+    }
+    date = datetime.strptime(date, '%d/%m/%Y')
+    present = datetime.now()
+    if date >= present:
+        tasks.append(new_dict)
+    else: 
+        raise ValueError
+    
 # Delete task from the list
 
 
@@ -81,10 +104,7 @@ def modify_task(tasks, target_index, new_value):
         tasks[target_index] = new_value
     else:
         raise IndexError()
-            
-
-
-        
+              
 
 # Quit
 
